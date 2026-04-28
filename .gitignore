@@ -1,0 +1,8 @@
+# تجاهل الـ secrets
+02-secret.yaml
+
+# تجاهل node_modules
+node_modules/
+
+# تجاهل الـ logs
+*.log

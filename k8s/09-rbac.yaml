@@ -1,0 +1,42 @@
+# ServiceAccount للـ API
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: banking-api-sa
+  namespace: banking
+---
+# ServiceAccount للـ Dashboard
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: banking-dashboard-sa
+  namespace: banking
+---
+# Role — صلاحيات الـ developer
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: developer-role
+  namespace: banking
+rules:
+- apiGroups: [""]
+  resources: ["pods", "services"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: ["apps"]
+  resources: ["deployments"]
+  verbs: ["get", "list", "watch"]
+---
+# RoleBinding — اربط الـ developer بالـ Role
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: developer-rolebinding
+  namespace: banking
+subjects:
+- kind: User
+  name: developer
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: Role
+  name: developer-role
+  apiGroup: rbac.authorization.k8s.io

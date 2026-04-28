@@ -1,0 +1,41 @@
+# Service 1: PostgreSQL - Headless
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-db
+  namespace: banking
+spec:
+  clusterIP: None
+  selector:
+    app: postgres-db
+  ports:
+  - port: 5432
+    targetPort: 5432
+---
+# Service 2: Banking API
+apiVersion: v1
+kind: Service
+metadata:
+  name: banking-api-service
+  namespace: banking
+spec:
+  type: ClusterIP
+  selector:
+    app: banking-api
+  ports:
+  - port: 3000
+    targetPort: 3000
+---
+# Service 3: Dashboard
+apiVersion: v1
+kind: Service
+metadata:
+  name: banking-dashboard-service
+  namespace: banking
+spec:
+  type: ClusterIP
+  selector:
+    app: banking-dashboard
+  ports:
+  - port: 80
+    targetPort: 80
